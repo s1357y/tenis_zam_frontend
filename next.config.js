@@ -15,7 +15,7 @@ const nextConfig = {
   },
   async rewrites() {
     const apiUrl = process.env.NODE_ENV === 'production' 
-      ? 'https://teniszam.netlify.app' 
+      ? 'https://52.62.221.116:3001' 
       : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
     
     return [
@@ -31,7 +31,7 @@ const nextConfig = {
   // 배포 환경에서 API URL 설정
   publicRuntimeConfig: {
     apiUrl: process.env.NODE_ENV === 'production' 
-      ? 'https://teniszam.netlify.app' 
+      ? 'https://52.62.221.116:3001' 
       : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
   }
 };
