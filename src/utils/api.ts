@@ -4,9 +4,23 @@ import Cookies from 'js-cookie';
 import toast from 'react-hot-toast';
 
 // API 기본 설정
-const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://52.62.221.116:3001' 
-  : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+const getApiBaseUrl = () => {
+  // 브라우저 환경에서 실행되는 경우
+  if (typeof window !== 'undefined') {
+    // 프로덕션 환경에서는 환경변수 사용, 없으면 기본값 사용
+    return process.env.NEXT_PUBLIC_API_URL || 'https://52.62.221.116:3001';
+  }
+  
+  // 서버 사이드 렌더링 환경
+  if (process.env.NODE_ENV === 'production') {
+    return process.env.NEXT_PUBLIC_API_URL || 'https://52.62.221.116:3001';
+  }
+  
+  // 개발 환경
+  return process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 const api = axios.create({
   baseURL: API_BASE_URL,

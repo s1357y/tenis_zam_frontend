@@ -8,7 +8,10 @@
     "dev:normal": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build:production": "NODE_ENV=production next build",
+    "preview": "next build && next start",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@types/react-big-calendar": "^1.16.3",

@@ -14,25 +14,23 @@ const nextConfig = {
     return config;
   },
   async rewrites() {
-    const apiUrl = process.env.NODE_ENV === 'production' 
-      ? 'https://52.62.221.116:3001' 
-      : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+    // 개발 환경에서만 API 프록시 사용
+    if (process.env.NODE_ENV === 'development') {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+      
+      return [
+        {
+          source: '/api/:path*',
+          destination: `${apiUrl}/api/:path*`
+        }
+      ];
+    }
     
-    return [
-      {
-        source: '/api/:path*',
-        destination: `${apiUrl}/api/:path*`
-      }
-    ];
+    // 프로덕션에서는 직접 API 호출
+    return [];
   },
   env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001',
-  },
-  // 배포 환경에서 API URL 설정
-  publicRuntimeConfig: {
-    apiUrl: process.env.NODE_ENV === 'production' 
-      ? 'https://52.62.221.116:3001' 
-      : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
   }
 };
 
